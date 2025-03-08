@@ -1,46 +1,107 @@
+
 let slideIndex = 0;
+let slideshowInterval;
 
 function showSlides() {
-    let slides = document.getElementsByClassName("mySlides");
-    let dots = document.getElementsByClassName("dot");
-
-    if (slides.length === 0 || dots.length === 0) return; 
-
- 
-    for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
+    const slides = document.getElementsByClassName("mySlides");
+    const dots = document.getElementsByClassName("dot");
+    
+  
+    if (slides.length === 0 || dots.length === 0) {
+        console.error("No slides or dots found");
+        return;
     }
-
-
-    for (let i = 0; i < dots.length; i++) {
+    
+    
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
         dots[i].classList.remove("active");
     }
-
-    slideIndex = (slideIndex + 1 > slides.length) ? 1 : slideIndex + 1;
-    slides[slideIndex - 1].style.display = "block";  
+    
+    
+    slideIndex = (slideIndex + 1) % slides.length;
+    if (slideIndex === 0) slideIndex = slides.length; 
+    
+    
+    slides[slideIndex - 1].style.display = "block";
     dots[slideIndex - 1].classList.add("active");
-
-    setTimeout(showSlides, 2000); 
 }
 
-document.addEventListener("DOMContentLoaded", showSlides);
-          
-let btnOM = document.querySelector("button.btn-open-menu");
-let btnCM = document.querySelector("button.btn-close-menu");
-let boxM = document.querySelector("div.box-menu");
 
-btnOM.addEventListener("click", () => {
-  boxM.classList.toggle("active");
-});
+function initSlideshow() {
+  
+    if (slideshowInterval) clearInterval(slideshowInterval);
+    
+ 
+    slideshowInterval = setInterval(() => {
+        showSlides();
+    }, 3000); 
+    
 
-btnCM.addEventListener("click", () => {
-  boxM.classList.remove("active");
-});
+    document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            slideIndex = index;
+            showSlides();
+        });
+    });
+}
 
-document.addEventListener("click", event => {
-  if (!btnOM.contains(event.target) && event.target !== btnOM) {
-    boxM.classList.remove("active");
-  };
+
+const mobileMenu = (() => {
+    const btnOM = document.querySelector(".btn-open-menu");
+    const btnCM = document.querySelector(".btn-close-menu");
+    const boxM = document.querySelector(".box-menu");
+    
+    if (!btnOM || !btnCM || !boxM) {
+        console.error("Mobile menu elements missing");
+        return;
+    }
+    
+    const toggleMenu = (show) => {
+        boxM.classList.toggle("active", show);
+    };
+    
+    btnOM.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleMenu(true);
+    });
+    
+    btnCM.addEventListener("click", () => toggleMenu(false));
+    
+    document.addEventListener("click", (e) => {
+        if (!boxM.contains(e.target) && e.target !== btnOM) {
+            toggleMenu(false);
+        }
+    });
+    
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") toggleMenu(false);
+    });
+})();
+const darkModeToggle = (() => {
+    const toggle = document.querySelector('.toggle');
+    const toggleBall = document.querySelector('.toggle-ball');
+    
+    if (!toggle || !toggleBall) {
+        console.error("Dark mode elements missing");
+        return;
+    }
+    
+    const setTheme = (isDark) => {
+        document.body.classList.toggle('dark-mode', isDark);
+        toggle.classList.toggle('active', isDark);
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    };
+    
+    toggle.addEventListener('click', () => {
+        const isDark = !document.body.classList.contains('dark-mode');
+        setTheme(isDark);
+    });
+
+    const savedTheme = localStorage.getItem('theme');
+    setTheme(savedTheme === 'dark');
+})();
+
+document.addEventListener("DOMContentLoaded", () => {
+    initSlideshow();
 });
-          
-      
