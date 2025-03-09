@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Kanit", sans-serif;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: #121212;
+    color: white;
+}
+
+.navbar {
+    width: 100%;
+    height: 50px;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    height: 100%;
+    color: white;
+    font-family: "Sen", sans-serif;
+}
+
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+    color: #4dbf00;
+}
+
+
+.profile-container {
+    display: flex;
+    align-items: center;
+}
+
+.profile-picture {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.profile-text {
+    font-size: 14px;
+}
+
+.toggle {
+    width: 40px;
+    height: 20px;
+    background-color: white;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    cursor: pointer;
+}
+
+.toggle-icon {
+    color: goldenrod;
+}
+
+.toggle-ball {
+    width: 18px;
+    height: 18px;
+    background-color: black;
+    position: absolute;
+    right: 1px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+
+
+
+.left-menu-icon {
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+
+.slideshow-container {
+    position: relative;
+    max-width:100%;
+    margin-top: 120px; 
+    
+}
+
+.mySlides {
+    display: none;
+}
+
+.mySlides img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+
+            
+          
+.dot-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #4dbf00;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar-container {
+        padding: 0 20px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .sidebar {
+        width: 40px;
+    }
+
+    .left-menu-icon {
+        font-size: 16px;
+    }
+
+    .tt-abo {
+        padding: 0 10px;
+    }
+}
